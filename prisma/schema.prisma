@@ -1,0 +1,203 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id           String   @id @default(cuid())
+  email        String   @unique
+  passwordHash String
+  name         String
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  memories             Memory[]
+  projects             Project[]
+  experiences          Experience[]
+  skills               Skill[]
+  themes               BehavioralTheme[]
+  reflectionQuestions  ReflectionQuestion[]
+  memoryConnections    MemoryConnection[]
+}
+
+model Memory {
+  id         String   @id @default(cuid())
+  userId     String
+  content    String
+  occurredAt DateTime?
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+  projectId  String?
+  status     String   @default("captured")
+  embedding  String?
+  title      String?
+
+  user         User                 @relation(fields: [userId], references: [id], onDelete: Cascade)
+  project      Project?             @relation(fields: [projectId], references: [id], onDelete: SetNull)
+  extractions  MemoryExtraction[]
+  reflections  ReflectionQuestion[]
+  experienceLinks ExperienceMemory[]
+  skillLinks   SkillEvidence[]
+  themeLinks   ThemeEvidence[]
+  connectionsFrom MemoryConnection[] @relation("FromMemory")
+  connectionsTo   MemoryConnection[] @relation("ToMemory")
+
+  @@index([userId, createdAt])
+  @@index([userId, occurredAt])
+}
+
+model MemoryExtraction {
+  id         String   @id @default(cuid())
+  memoryId   String
+  kind       String
+  value      String
+  provenance String   @default("inferred")
+  sourceSpan String?
+  confidence Float    @default(0.7)
+  metadata   String?
+  createdAt  DateTime @default(now())
+
+  memory Memory @relation(fields: [memoryId], references: [id], onDelete: Cascade)
+
+  @@index([memoryId])
+  @@index([kind])
+}
+
+model Project {
+  id           String    @id @default(cuid())
+  userId       String
+  name         String
+  description  String?
+  kind         String    @default("other")
+  organization String?
+  startedAt    DateTime?
+  endedAt      DateTime?
+  createdAt    DateTime  @default(now())
+  updatedAt    DateTime  @updatedAt
+
+  user         User          @relation(fields: [userId], references: [id], onDelete: Cascade)
+  memories     Memory[]
+  experiences  Experience[]
+
+  @@index([userId])
+  @@unique([userId, name])
+}
+
+model Experience {
+  id        String    @id @default(cuid())
+  userId    String
+  projectId String?
+  title     String
+  summary   String?
+  occurredAt DateTime?
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+
+  user     User               @relation(fields: [userId], references: [id], onDelete: Cascade)
+  project  Project?           @relation(fields: [projectId], references: [id], onDelete: SetNull)
+  memories ExperienceMemory[]
+
+  @@index([userId])
+}
+
+model ExperienceMemory {
+  experienceId String
+  memoryId     String
+
+  experience Experience @relation(fields: [experienceId], references: [id], onDelete: Cascade)
+  memory     Memory     @relation(fields: [memoryId], references: [id], onDelete: Cascade)
+
+  @@id([experienceId, memoryId])
+}
+
+model Skill {
+  id        String   @id @default(cuid())
+  userId    String
+  name      String
+  kind      String   @default("skill")
+  createdAt DateTime @default(now())
+
+  user      User            @relation(fields: [userId], references: [id], onDelete: Cascade)
+  evidence  SkillEvidence[]
+
+  @@unique([userId, name, kind])
+  @@index([userId])
+}
+
+model SkillEvidence {
+  skillId  String
+  memoryId String
+  provenance String @default("inferred")
+  sourceSpan String?
+
+  skill  Skill  @relation(fields: [skillId], references: [id], onDelete: Cascade)
+  memory Memory @relation(fields: [memoryId], references: [id], onDelete: Cascade)
+
+  @@id([skillId, memoryId])
+}
+
+model BehavioralTheme {
+  id          String   @id @default(cuid())
+  userId      String
+  name        String
+  description String?
+  createdAt   DateTime @default(now())
+
+  user     User            @relation(fields: [userId], references: [id], onDelete: Cascade)
+  evidence ThemeEvidence[]
+
+  @@unique([userId, name])
+  @@index([userId])
+}
+
+model ThemeEvidence {
+  themeId  String
+  memoryId String
+  provenance String @default("inferred")
+  rationale  String?
+
+  theme  BehavioralTheme @relation(fields: [themeId], references: [id], onDelete: Cascade)
+  memory Memory          @relation(fields: [memoryId], references: [id], onDelete: Cascade)
+
+  @@id([themeId, memoryId])
+}
+
+model ReflectionQuestion {
+  id       String   @id @default(cuid())
+  userId   String
+  memoryId String
+  question String
+  reason   String?
+  status   String   @default("pending")
+  answer   String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  memory Memory @relation(fields: [memoryId], references: [id], onDelete: Cascade)
+
+  @@index([userId, status])
+  @@index([memoryId])
+}
+
+model MemoryConnection {
+  id           String   @id @default(cuid())
+  userId       String
+  fromMemoryId String
+  toMemoryId   String
+  reason       String
+  strength     Float    @default(0.5)
+  provenance   String   @default("inferred")
+  createdAt    DateTime @default(now())
+
+  user       User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  fromMemory Memory @relation("FromMemory", fields: [fromMemoryId], references: [id], onDelete: Cascade)
+  toMemory   Memory @relation("ToMemory", fields: [toMemoryId], references: [id], onDelete: Cascade)
+
+  @@unique([fromMemoryId, toMemoryId])
+  @@index([userId])
+}

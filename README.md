@@ -1,36 +1,58 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Strand
 
-## Getting Started
+A living career memory and professional knowledge base.
 
-First, run the development server:
+Capture informal professional experiences in seconds. Strand helps you **remember, reflect, organize, connect, and recall** your real history — for interviews, resumes, reviews, and ordinary Tuesdays.
+
+## Philosophy
+
+- Your original memories are the source of truth
+- AI extracts and asks questions; it never invents metrics or accomplishments
+- Explicit facts are labeled separately from inferred themes/skills
+- Capture first, organize later
+
+## Stack
+
+- Next.js (App Router) + TypeScript
+- Prisma + SQLite
+- Cookie sessions (JWT via jose)
+- Heuristic + optional OpenAI analysis (`OPENAI_API_KEY`)
+
+## Setup
 
 ```bash
+npm install
+npx prisma migrate dev
+npm run db:seed
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000](http://localhost:3000).
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### Demo account
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+- Email: `demo@strand.app`
+- Password: `demo1234`
 
-## Learn More
+### Optional AI
 
-To learn more about Next.js, take a look at the following resources:
+Add to `.env`:
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+```
+OPENAI_API_KEY=sk-...
+```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+Without a key, Strand still extracts structure, metrics, technologies, reflection prompts, and semantic-ish search via local embeddings.
 
-## Deploy on Vercel
+## Scripts
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+| Script | Description |
+|--------|-------------|
+| `npm run dev` | Development server |
+| `npm run build` | Production build |
+| `npm run db:seed` | Seed demo career history |
+| `npx prisma studio` | Browse the database |
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## Product loop
+
+**Capture → Understand → Reflect → Connect → Recall → Use**
