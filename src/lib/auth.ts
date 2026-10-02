@@ -4,10 +4,13 @@ import bcrypt from "bcryptjs";
 import { prisma } from "./db";
 
 const COOKIE_NAME = "strand_session";
-const secret = () =>
-  new TextEncoder().encode(
-    process.env.AUTH_SECRET || "strand-dev-secret-change-in-production-32chars"
-  );
+const secret = () => {
+  const value = process.env.AUTH_SECRET;
+  if (!value) {
+    throw new Error("AUTH_SECRET is required");
+  }
+  return new TextEncoder().encode(value);
+};
 
 export type SessionUser = {
   id: string;

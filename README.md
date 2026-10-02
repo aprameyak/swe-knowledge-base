@@ -1,22 +1,18 @@
 # Strand
 
-A living career memory and professional knowledge base (`swe-knowledge-base`).
+Career memory store. Capture informal work notes and pull them back for interviews, resumes, and reviews.
 
-Capture informal professional experiences in seconds. Strand helps you **remember, reflect, organize, connect, and recall** your real history — for interviews, resumes, reviews, and ordinary Tuesdays.
+Repo name on GitHub: `swe-knowledge-base`.
 
-## Philosophy
+## Behavior
 
-- Your original memories are the source of truth
-- AI extracts and asks questions; it never invents metrics or accomplishments
-- Explicit facts are labeled separately from inferred themes/skills
-- Capture first, organize later
+- Original text stays the source of truth
+- Optional AI extracts structure; it does not invent metrics
+- Explicit facts stay separate from inferred themes/skills
 
 ## Stack
 
-- Next.js (App Router) + TypeScript
-- Prisma + SQLite
-- Cookie sessions (JWT via jose)
-- Heuristic + optional OpenAI analysis (`OPENAI_API_KEY`)
+Next.js, TypeScript, Prisma + SQLite, cookie sessions (jose), local heuristics + optional OpenAI (`OPENAI_API_KEY`)
 
 ## Setup
 
@@ -28,35 +24,18 @@ npm run db:seed
 npm run dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000).
+http://localhost:3000
 
-### Local seed account
+Seed account (local only): `demo@strand.app` / `demo1234`
 
-- Email: `demo@strand.app`
-- Password: `demo1234`
-
-### Optional AI
-
-Add to `.env`:
-
-```
-OPENAI_API_KEY=sk-...
-```
-
-Without a key, Strand still extracts structure, metrics, technologies, reflection prompts, and semantic-ish search via local embeddings.
-
-## Scripts
+Without `OPENAI_API_KEY`, extraction and search still run on local heuristics/embeddings.
 
 | Script | Description |
 |--------|-------------|
-| `npm run dev` | Development server |
+| `npm run dev` | Dev server |
 | `npm run build` | Production build |
-| `npm run db:seed` | Seed demo career history |
-| `npx prisma studio` | Browse the database |
-
-## Product loop
-
-**Capture → Understand → Reflect → Connect → Recall → Use**
+| `npm run db:seed` | Seed demo history |
+| `npx prisma studio` | Browse DB |
 
 ## License
 
