@@ -42,9 +42,6 @@ export default async function LandingPage() {
               </Button>
             </Link>
           </div>
-          <p className="mt-4 text-xs text-[var(--ink-faint)]">
-            Demo: demo@strand.app / demo1234
-          </p>
         </div>
 
         <div className="animate-fade-up-delay relative grain overflow-hidden rounded-3xl border border-[var(--line)] bg-[var(--ink)] p-8 text-[var(--bg-elevated)] shadow-[var(--shadow)] min-h-[360px] flex flex-col justify-end">

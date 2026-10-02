@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import Link from "next/link";
 import { USE_MODES, type UseModeId } from "@/lib/ai";
 import { Button, EmptyState, Input, Panel, Textarea, ProvenanceBadge } from "@/components/ui";
@@ -50,17 +50,12 @@ export default function UsePage() {
     }
   }
 
-  useEffect(() => {
-    void load("behavioral");
-  }, []);
-
   return (
     <div className="mx-auto max-w-3xl space-y-8">
       <div>
         <h1 className="font-display text-3xl sm:text-4xl">Use</h1>
         <p className="mt-2 text-[var(--ink-muted)]">
-          Different views over the same career knowledge — not separate copies
-          of your story.
+          Views over the same notes for interviews and reviews.
         </p>
       </div>
 
