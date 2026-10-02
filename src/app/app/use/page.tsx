@@ -130,13 +130,13 @@ export default function UsePage() {
 
       {loading && (
         <p className="text-sm text-[var(--ink-faint)] animate-pulse-soft">
-          Retrieving your experiences…
+          Loading…
         </p>
       )}
 
       {!loading && data && data.buckets.every((b) => b.results.length === 0) && (
         <EmptyState
-          title="No grounded examples yet"
+          title="No matches"
           description="Capture more experiences, or try a different mode. Strand won't invent examples to fill the gap."
           action={
             <Link href="/app" className="text-sm text-[var(--accent)]">
