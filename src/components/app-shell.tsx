@@ -49,7 +49,7 @@ export function AppShell({
             Strand
           </div>
           <div className="text-[11px] text-[var(--ink-faint)]">
-            Career memory
+            Memories
           </div>
         </Link>
 
