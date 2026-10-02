@@ -48,9 +48,6 @@ export function AppShell({
           <div className="font-display text-2xl tracking-tight text-[var(--ink)]">
             Strand
           </div>
-          <div className="text-[11px] text-[var(--ink-faint)]">
-            Memories
-          </div>
         </Link>
 
         <Link href="/app" className="mb-4">
@@ -118,7 +115,7 @@ export function AppShell({
         <main className="flex-1 px-4 py-6 sm:px-6 lg:px-8">{children}</main>
 
         <nav className="sticky bottom-0 z-20 flex border-t border-[var(--line)] bg-[var(--bg-elevated)]/95 backdrop-blur md:hidden">
-          {NAV.slice(0, 5).map((item) => {
+          {NAV.filter((item) => item.href !== "/app/projects").map((item) => {
             const active =
               item.href === "/app"
                 ? pathname === "/app"
@@ -141,7 +138,6 @@ export function AppShell({
         </nav>
       </div>
 
-      {}
       {pathname !== "/app" && (
         <Link
           href="/app"

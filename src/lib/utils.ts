@@ -20,8 +20,3 @@ export function formatRelativeDate(date: Date | string | null | undefined) {
     year: d.getFullYear() !== now.getFullYear() ? "numeric" : undefined,
   });
 }
-
-export function truncate(text: string, max = 140) {
-  if (text.length <= max) return text;
-  return text.slice(0, max).trimEnd() + "…";
-}

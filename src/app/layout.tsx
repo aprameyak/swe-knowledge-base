@@ -4,7 +4,7 @@ import "./globals.css";
 export const metadata: Metadata = {
   title: "Strand",
   description:
-    "Capture professional experiences in seconds. Strand helps you remember, connect, and recall your real career history.",
+    "Store work notes and pull them for interviews, resumes, and reviews.",
 };
 
 export default function RootLayout({

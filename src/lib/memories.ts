@@ -236,7 +236,7 @@ async function connectRelatedMemories(
         userId,
         fromMemoryId: a,
         toMemoryId: b,
-        reason: " overlapping themes, skills, or language",
+        reason: "Related themes, skills, or language",
         strength: s.score,
         provenance: "inferred",
       },

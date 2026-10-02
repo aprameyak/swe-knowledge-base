@@ -41,9 +41,6 @@ export default function LoginPage() {
         </Link>
         <Panel className="p-6 sm:p-8">
           <h1 className="font-display text-2xl">Sign in</h1>
-          <p className="mt-1 text-sm text-[var(--ink-muted)]">
-            Sign in.
-          </p>
           <form onSubmit={(e) => void submit(e)} className="mt-6 space-y-4">
             <div>
               <label className="mb-1.5 block text-xs font-medium text-[var(--ink-muted)]">
