@@ -1,7 +1,9 @@
 {
-  "name": "swe-knowledge-base",
+  "name": "strand",
   "version": "0.1.0",
   "private": true,
+  "description": "Strand — living career memory and professional knowledge base",
+  "license": "MIT",
   "scripts": {
     "dev": "next dev",
     "build": "prisma generate && next build",

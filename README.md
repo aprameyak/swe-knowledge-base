@@ -1,6 +1,6 @@
 # Strand
 
-A living career memory and professional knowledge base.
+A living career memory and professional knowledge base (`swe-knowledge-base`).
 
 Capture informal professional experiences in seconds. Strand helps you **remember, reflect, organize, connect, and recall** your real history — for interviews, resumes, reviews, and ordinary Tuesdays.
 
@@ -21,6 +21,7 @@ Capture informal professional experiences in seconds. Strand helps you **remembe
 ## Setup
 
 ```bash
+cp .env.example .env
 npm install
 npx prisma migrate dev
 npm run db:seed
@@ -29,7 +30,7 @@ npm run dev
 
 Open [http://localhost:3000](http://localhost:3000).
 
-### Demo account
+### Local seed account
 
 - Email: `demo@strand.app`
 - Password: `demo1234`
@@ -56,3 +57,7 @@ Without a key, Strand still extracts structure, metrics, technologies, reflectio
 ## Product loop
 
 **Capture → Understand → Reflect → Connect → Recall → Use**
+
+## License
+
+MIT
