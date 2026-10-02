@@ -32,6 +32,7 @@ export type AnalysisResult = {
   reflections: ReflectionPrompt[];
   themes: { name: string; rationale: string }[];
   projectHint?: string;
+  source: "openai" | "heuristic";
 };
 
 const TECHNOLOGY_PATTERNS: { pattern: RegExp; name: string }[] = [
@@ -310,7 +311,7 @@ function heuristicAnalyze(content: string): AnalysisResult {
 
   const title = buildTitle(content, extractions);
 
-  return { title, extractions, reflections, themes, projectHint };
+  return { title, extractions, reflections, themes, projectHint, source: "heuristic" };
 }
 
 function buildTitle(content: string, extractions: Extraction[]): string {
@@ -420,6 +421,7 @@ Rules:
       reflections: (parsed.reflections || []).slice(0, 3),
       themes: parsed.themes || [],
       projectHint: parsed.projectHint,
+      source: "openai",
     };
   } catch {
     return null;
@@ -428,7 +430,7 @@ Rules:
 
 export async function analyzeMemory(content: string): Promise<AnalysisResult> {
   const ai = await openaiAnalyze(content);
-  if (ai) return ai;
+  if (ai) return { ...ai, source: "openai" };
   return heuristicAnalyze(content);
 }
 
