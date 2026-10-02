@@ -434,7 +434,7 @@ export async function analyzeMemory(content: string): Promise<AnalysisResult> {
   return heuristicAnalyze(content);
 }
 
-export function localEmbed(text: string): number[] {
+function localEmbed(text: string): number[] {
   const tokens = text
     .toLowerCase()
     .replace(/[^a-z0-9\s]/g, " ")

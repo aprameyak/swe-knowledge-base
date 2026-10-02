@@ -81,8 +81,8 @@ export default async function LandingPage() {
               body: "Strand asks useful questions and retrieves your own experiences. It never fabricates impact.",
             },
             {
-              title: "Useful on a Tuesday",
-              body: "Timeline, knowledge views, and recall stay valuable long after any job hunt ends.",
+              title: "Still useful later",
+              body: "Timeline, knowledge, and recall keep the same notes handy between interviews and reviews.",
             },
           ].map((item, i) => (
             <div

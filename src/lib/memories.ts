@@ -213,14 +213,14 @@ async function connectRelatedMemories(
 ) {
   const others = await prisma.memory.findMany({
     where: { userId, id: { not: memoryId }, embedding: { not: null } },
-    select: { id: true, embedding: true, content: true, title: true },
+    select: { id: true, embedding: true },
     take: 100,
   });
 
   const scored = others
     .map((o) => {
       const emb = o.embedding ? (JSON.parse(o.embedding) as number[]) : [];
-      return { id: o.id, score: cosineSimilarity(embedding, emb), title: o.title };
+      return { id: o.id, score: cosineSimilarity(embedding, emb) };
     })
     .filter((s) => s.score > 0.55)
     .sort((a, b) => b.score - a.score)

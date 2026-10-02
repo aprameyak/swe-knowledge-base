@@ -3,16 +3,14 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import { Button, Textarea } from "./ui";
-import { CornerDownLeft, Loader2, Sparkles } from "lucide-react";
+import { CornerDownLeft, Loader2, PenLine } from "lucide-react";
 
 type CaptureComposerProps = {
-  compact?: boolean;
   onCaptured?: (memory: { id: string }) => void;
   autofocus?: boolean;
 };
 
 export function CaptureComposer({
-  compact,
   onCaptured,
   autofocus,
 }: CaptureComposerProps) {
@@ -56,21 +54,15 @@ export function CaptureComposer({
   }, [content, saving, onCaptured, router]);
 
   return (
-    <div
-      className={
-        compact
-          ? "rounded-2xl border border-[var(--line)] bg-[var(--surface)] p-3 shadow-[var(--shadow)]"
-          : "rounded-[var(--radius)] border border-[var(--line)] bg-[var(--surface)] p-4 shadow-[var(--shadow)]"
-      }
-    >
+    <div className="rounded-[var(--radius)] border border-[var(--line)] bg-[var(--surface)] p-4 shadow-[var(--shadow)]">
       <div className="mb-2 flex items-center justify-between gap-3">
         <div className="flex items-center gap-2 text-sm text-[var(--ink-muted)]">
-          <Sparkles className="h-4 w-4 text-[var(--accent)]" />
+          <PenLine className="h-4 w-4 text-[var(--accent)]" />
           <span>Capture a memory</span>
         </div>
         {justSaved && (
           <span className="text-xs font-medium text-[var(--accent)] animate-fade-up">
-            Saved — understanding it now
+            Saved
           </span>
         )}
       </div>
@@ -79,7 +71,7 @@ export function CaptureComposer({
         value={content}
         onChange={(e) => setContent(e.target.value)}
         placeholder='e.g. "finally fixed the slow dashboard query today, moved aggregation into postgres and it went from around 8 seconds to 2"'
-        className={compact ? "min-h-[88px] border-0 bg-transparent px-1 shadow-none focus:ring-0" : "min-h-[120px]"}
+        className="min-h-[120px]"
         onKeyDown={(e) => {
           if ((e.metaKey || e.ctrlKey) && e.key === "Enter") {
             e.preventDefault();

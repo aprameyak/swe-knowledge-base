@@ -2,7 +2,6 @@ import { NextResponse } from "next/server";
 import { AuthError, requireUser } from "@/lib/auth";
 import { searchMemories } from "@/lib/memories";
 import { USE_MODES, type UseModeId } from "@/lib/ai";
-import { prisma } from "@/lib/db";
 
 const MODE_QUERIES: Record<UseModeId, string[]> = {
   behavioral: [
@@ -67,17 +66,6 @@ export async function GET(req: Request) {
       });
     }
 
-    const seen = new Set<string>();
-    const topEvidence = [];
-    for (const b of buckets) {
-      for (const r of b.results) {
-        if (seen.has(r.memory.id)) continue;
-        seen.add(r.memory.id);
-        topEvidence.push(r);
-      }
-    }
-    topEvidence.sort((a, b) => b.score - a.score);
-
     const modeMeta = USE_MODES.find((m) => m.id === mode)!;
 
     const guidance =
@@ -89,14 +77,9 @@ export async function GET(req: Request) {
             ? "Matches are grounded only in what you've captured. Gaps mean you haven't recorded evidence yet — not that you lack the skill."
             : "A view over the same career knowledge — nothing here invents new accomplishments.";
 
-    const pending = await prisma.reflectionQuestion.count({
-      where: { userId: user.id, status: "pending" },
-    });
-
     return NextResponse.json({
       mode: modeMeta,
       guidance,
-      pendingReflections: pending,
       buckets: buckets.map((b) => ({
         label: b.label,
         results: b.results.map((r) => ({
@@ -113,16 +96,8 @@ export async function GET(req: Request) {
               )
             ),
             themes: r.memory.themeLinks.map((t) => t.theme.name),
-            provenanceNote:
-              "All details below come from your original memory or clearly marked inferences.",
           },
         })),
-      })),
-      topEvidence: topEvidence.slice(0, 10).map((r) => ({
-        id: r.memory.id,
-        title: r.memory.title,
-        score: Math.round(r.score * 100) / 100,
-        snippet: r.memory.content.slice(0, 200),
       })),
     });
   } catch (e) {

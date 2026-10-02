@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Link from "next/link";
 import { USE_MODES, type UseModeId } from "@/lib/ai";
 import { Button, EmptyState, Input, Panel, Textarea, ProvenanceBadge } from "@/components/ui";
@@ -49,6 +49,12 @@ export default function UsePage() {
       setLoading(false);
     }
   }
+
+  useEffect(() => {
+    void load("behavioral", "", "");
+    // Initial load only; later refreshes go through mode/focus controls.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <div className="mx-auto max-w-3xl space-y-8">

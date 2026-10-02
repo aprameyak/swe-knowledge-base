@@ -11,7 +11,6 @@ import {
   LogOut,
   Plus,
   Search,
-  Sparkles,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Button } from "./ui";
@@ -143,7 +142,7 @@ export function AppShell({
           href="/app"
           className="fixed bottom-6 right-6 hidden items-center gap-2 rounded-full bg-[var(--accent)] px-4 py-2.5 text-sm font-medium text-white shadow-lg transition hover:bg-[var(--accent-ink)] md:flex"
         >
-          <Sparkles className="h-4 w-4" />
+          <Plus className="h-4 w-4" />
           Capture
         </Link>
       )}
