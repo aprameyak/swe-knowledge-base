@@ -22,26 +22,14 @@ export async function processMemory(memoryId: string) {
   });
 
   await prisma.memoryExtraction.createMany({
-    data: [
-      ...analysis.extractions.map((e) => ({
-        memoryId,
-        kind: e.kind,
-        value: e.value,
-        provenance: e.provenance,
-        sourceSpan: e.sourceSpan,
-        confidence: e.confidence,
-      })),
-      {
-        memoryId,
-        kind: "lesson",
-        value:
-          analysis.source === "openai"
-            ? "Structured with OpenAI"
-            : "Structured with local heuristics",
-        provenance: "inferred",
-        confidence: 1,
-      },
-    ],
+    data: analysis.extractions.map((e) => ({
+      memoryId,
+      kind: e.kind,
+      value: e.value,
+      provenance: e.provenance,
+      sourceSpan: e.sourceSpan,
+      confidence: e.confidence,
+    })),
   });
 
   if (analysis.reflections.length > 0) {

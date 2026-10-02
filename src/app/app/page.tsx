@@ -73,7 +73,7 @@ export default async function AppHomePage() {
         </h2>
         {memories.length === 0 ? (
           <EmptyState
-            title="Your career memory starts empty"
+            title="No memories yet"
             description="Write one informal note about something you did, fixed, decided, or learned. Strand will extract structure and ask a follow-up only if it helps."
           />
         ) : (

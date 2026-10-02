@@ -29,17 +29,16 @@ export default async function LandingPage() {
             Strand
           </h1>
           <p className="mt-5 max-w-md text-lg leading-relaxed text-[var(--ink-muted)]">
-            A living career memory. Capture what happened in seconds — then
-            recall it when resumes, interviews, and reviews need the real
-            details.
+            Capture work notes. Pull them later for interviews, resumes, and
+            reviews.
           </p>
           <div className="mt-8 flex flex-wrap gap-3">
             <Link href="/signup">
-              <Button size="lg">Start capturing</Button>
+              <Button size="lg">Get started</Button>
             </Link>
             <Link href="/login">
               <Button size="lg" variant="secondary">
-                Try the demo
+                Sign in
               </Button>
             </Link>
           </div>
@@ -105,7 +104,7 @@ export default async function LandingPage() {
       </section>
 
       <footer className="mx-auto flex max-w-6xl items-center justify-between px-6 py-8 text-xs text-[var(--ink-faint)]">
-        <span>Strand — professional memory that compounds</span>
+        <span>Strand</span>
         <span>Your words stay the source of truth</span>
       </footer>
     </div>

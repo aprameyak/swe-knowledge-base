@@ -40,9 +40,9 @@ export default function LoginPage() {
           Strand
         </Link>
         <Panel className="p-6 sm:p-8">
-          <h1 className="font-display text-2xl">Welcome back</h1>
+          <h1 className="font-display text-2xl">Sign in</h1>
           <p className="mt-1 text-sm text-[var(--ink-muted)]">
-            Sign in to continue your career memory.
+            Sign in.
           </p>
           <form onSubmit={(e) => void submit(e)} className="mt-6 space-y-4">
             <div>
