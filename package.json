@@ -18,18 +18,18 @@
     "seed": "tsx prisma/seed.ts"
   },
   "dependencies": {
-    "@prisma/client": "^6.19.0",
+    "@prisma/client": "^6.19.3",
     "bcryptjs": "^3.0.3",
     "clsx": "^2.1.1",
     "jose": "^6.2.12",
     "lucide-react": "^1.49.0",
-    "next": "16.3.7",
+    "next": "16.4.4",
     "openai": "^7.25.0",
-    "prisma": "^6.19.0",
+    "prisma": "^6.19.3",
     "react": "19.2.8",
     "react-dom": "19.2.8",
     "tailwind-merge": "^3.7.0",
-    "zod": "^4.6.5"
+    "zod": "^4.6.7"
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4",
@@ -37,7 +37,7 @@
     "@types/react": "^19",
     "@types/react-dom": "^19",
     "eslint": "^9",
-    "eslint-config-next": "16.3.7",
+    "eslint-config-next": "16.4.4",
     "tailwindcss": "^4",
     "tsx": "^4.23.15",
     "typescript": "^5"
