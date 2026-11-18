@@ -57,10 +57,6 @@ body::before {
   pointer-events: none;
   z-index: 0;
   opacity: 0.45;
-  background-image:
-    radial-gradient(ellipse 80% 50% at 10% -10%, rgba(13, 110, 110, 0.12), transparent),
-    radial-gradient(ellipse 60% 40% at 100% 0%, rgba(74, 85, 112, 0.1), transparent),
-    linear-gradient(180deg, transparent, transparent);
 }
 
 h1,

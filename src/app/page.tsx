@@ -45,7 +45,6 @@ export default async function LandingPage() {
         </div>
 
         <div className="animate-fade-up-delay relative grain overflow-hidden rounded-3xl border border-[var(--line)] bg-[var(--ink)] p-8 text-[var(--bg-elevated)] shadow-[var(--shadow)] min-h-[360px] flex flex-col justify-end">
-          <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,rgba(13,110,110,0.35),transparent_55%),linear-gradient(160deg,#1a222c,#12161c)]" />
           <div className="relative space-y-4">
             <p className="text-xs uppercase tracking-[0.2em] text-white/50">
               Just captured
