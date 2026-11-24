@@ -51,7 +51,7 @@ Other scripts: `npm run lint`, `npm run typecheck`, `npm test`, `npm run build`,
 
 ## Contributing
 
-Issues and pull requests are welcome. Before opening a PR, run `npm run lint`, `npm run typecheck`, and `npm run build`; CI runs these plus `prisma migrate deploy`.
+Issues and pull requests are welcome. Before opening a PR, run `npm run lint`, `npm run typecheck`, `npm test`, and `npm run build`; CI runs these plus `prisma migrate deploy`.
 
 ## License
 
