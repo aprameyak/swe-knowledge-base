@@ -3,15 +3,29 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { USE_MODES, type UseModeId } from "@/lib/ai";
-import { Button, EmptyState, Input, Panel, Textarea, ProvenanceBadge } from "@/components/ui";
+import {
+  Button,
+  EmptyState,
+  Input,
+  Panel,
+  Textarea,
+  ProvenanceBadge,
+} from "@/components/ui";
 
 type UsePayload = {
   mode: { id: string; title: string; description: string };
   guidance: string;
+  exportMarkdown?: string;
   buckets: {
     label: string;
     results: {
       score: number;
+      drafts: {
+        resumeBullet: string;
+        star: string;
+        grounded: boolean;
+        explicitMetric: boolean;
+      };
       memory: {
         id: string;
         title: string | null;
@@ -29,12 +43,17 @@ type UsePayload = {
   }[];
 };
 
+async function copyText(text: string) {
+  await navigator.clipboard.writeText(text);
+}
+
 export default function UsePage() {
   const [mode, setMode] = useState<UseModeId>("behavioral");
   const [focus, setFocus] = useState("");
   const [job, setJob] = useState("");
   const [data, setData] = useState<UsePayload | null>(null);
   const [loading, setLoading] = useState(false);
+  const [copied, setCopied] = useState<string | null>(null);
 
   async function load(nextMode = mode, nextFocus = focus, nextJob = job) {
     setLoading(true);
@@ -50,19 +69,41 @@ export default function UsePage() {
     }
   }
 
+  async function markCopied(key: string, text: string) {
+    await copyText(text);
+    setCopied(key);
+    window.setTimeout(() => setCopied((cur) => (cur === key ? null : cur)), 1500);
+  }
+
   useEffect(() => {
     void load("behavioral", "", "");
-    // Initial load only; later refreshes go through mode/focus controls.
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  const showResume = mode === "resume" || mode === "performance" || mode === "portfolio";
+  const showStar =
+    mode === "behavioral" || mode === "job" || mode === "reflection";
+
   return (
     <div className="mx-auto max-w-3xl space-y-8">
-      <div>
-        <h1 className="font-display text-3xl sm:text-4xl">Use</h1>
-        <p className="mt-2 text-[var(--ink-muted)]">
-          Views over the same notes for interviews and reviews.
-        </p>
+      <div className="flex flex-wrap items-end justify-between gap-3">
+        <div>
+          <h1 className="font-display text-3xl sm:text-4xl">Use</h1>
+          <p className="mt-2 text-[var(--ink-muted)]">
+            Pull real notes into resume bullets and STAR drafts you can copy.
+          </p>
+        </div>
+        {data?.exportMarkdown ? (
+          <Button
+            size="sm"
+            variant="secondary"
+            onClick={() =>
+              void markCopied("export", data.exportMarkdown || "")
+            }
+          >
+            {copied === "export" ? "Copied export" : "Copy full export"}
+          </Button>
+        ) : null}
       </div>
 
       <div className="flex flex-wrap gap-2">
@@ -200,17 +241,70 @@ export default function UsePage() {
                         </span>
                       ))}
                     </div>
-                    {mode === "behavioral" && (
-                      <p className="mt-3 text-xs text-[var(--ink-faint)]">
-                        Reminder: reopen the source memory to recover details
-                        before drafting a STAR answer.
-                      </p>
-                    )}
-                    {mode === "resume" && (
-                      <p className="mt-3 text-xs text-[var(--ink-faint)]">
-                        Evidence only — polish language after you verify each
-                        claim against the original memory.
-                      </p>
+
+                    {(showResume || showStar) && (
+                      <div className="mt-4 space-y-3 border-t border-[var(--line)] pt-3">
+                        {showResume && (
+                          <div>
+                            <div className="mb-1 flex items-center justify-between gap-2">
+                              <p className="text-xs font-medium uppercase tracking-wider text-[var(--ink-faint)]">
+                                Resume bullet
+                                {r.drafts.explicitMetric
+                                  ? " · explicit metric"
+                                  : ""}
+                              </p>
+                              <Button
+                                size="sm"
+                                variant="ghost"
+                                onClick={() =>
+                                  void markCopied(
+                                    `${r.memory.id}-bullet`,
+                                    r.drafts.resumeBullet
+                                  )
+                                }
+                              >
+                                {copied === `${r.memory.id}-bullet`
+                                  ? "Copied"
+                                  : "Copy"}
+                              </Button>
+                            </div>
+                            <p className="rounded-lg bg-[var(--bg)] px-3 py-2 text-sm leading-relaxed">
+                              {r.drafts.resumeBullet}
+                            </p>
+                          </div>
+                        )}
+                        {showStar && (
+                          <div>
+                            <div className="mb-1 flex items-center justify-between gap-2">
+                              <p className="text-xs font-medium uppercase tracking-wider text-[var(--ink-faint)]">
+                                STAR draft
+                              </p>
+                              <Button
+                                size="sm"
+                                variant="ghost"
+                                onClick={() =>
+                                  void markCopied(
+                                    `${r.memory.id}-star`,
+                                    r.drafts.star
+                                  )
+                                }
+                              >
+                                {copied === `${r.memory.id}-star`
+                                  ? "Copied"
+                                  : "Copy"}
+                              </Button>
+                            </div>
+                            <pre className="overflow-x-auto whitespace-pre-wrap rounded-lg bg-[var(--bg)] px-3 py-2 text-xs leading-relaxed text-[var(--ink-muted)]">
+                              {r.drafts.star}
+                            </pre>
+                          </div>
+                        )}
+                        {!r.drafts.grounded && (
+                          <p className="text-xs text-[var(--ink-faint)]">
+                            Weak grounding — reopen the source memory before using.
+                          </p>
+                        )}
+                      </div>
                     )}
                   </Panel>
                 ))}

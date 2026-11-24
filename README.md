@@ -8,6 +8,7 @@ A personal store for work notes aimed at software engineers. You write down what
 - Each note is analyzed into structured extractions (project, decision, outcome, metric, technology, skill, lesson, and others), each marked as explicit or inferred, plus follow-up reflection questions and behavioral themes such as Ownership or Learning from failure.
 - Recall: search across your notes using keyword and embedding similarity. Related notes are linked automatically.
 - Use modes that pull matching notes for a specific purpose: behavioral interview, resume, performance review, portfolio, job description matching, and career reflection.
+- Copy grounded resume bullets and STAR drafts from Use, or download a Markdown export (`/api/use?format=markdown`).
 - Timeline, project, and knowledge views (skills, technologies, themes) built from your notes.
 - Email and password accounts with a signed session cookie.
 
@@ -39,7 +40,7 @@ npm run dev
 
 Open http://localhost:3000 and sign in with the demo user from your `.env`, or create an account.
 
-Other scripts: `npm run lint`, `npm run typecheck`, `npm run build`, `npm run db:reset`. There is no test suite.
+Other scripts: `npm run lint`, `npm run typecheck`, `npm test`, `npm run build`, `npm run db:reset`.
 
 ## How it works
 

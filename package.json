@@ -12,7 +12,8 @@
     "typecheck": "tsc --noEmit",
     "db:seed": "prisma db seed",
     "db:reset": "prisma migrate reset --force",
-    "postinstall": "prisma generate"
+    "postinstall": "prisma generate",
+    "test": "tsx scripts/test-export.ts"
   },
   "prisma": {
     "seed": "tsx prisma/seed.ts"
